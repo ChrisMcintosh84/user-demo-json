@@ -2,6 +2,7 @@ package views;
 
 import models.User;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UserView {
@@ -15,16 +16,36 @@ public class UserView {
         System.out.println("4) Remove user");
         System.out.println("5) Exit");
 
-        return input.nextInt();
+        int choice = 0;
+
+        try {
+            choice = input.nextInt();
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid input");
+            input.nextLine();
+        }
+
+        return choice;
     }
 
     public User getAddUser() {
         System.out.println("Enter name: ");
         String name = input.next();
-        System.out.println("Enter age: ");
-        int age = input.nextInt();
-        System.out.println("Enter weight in kgs: ");
-        double weight = input.nextDouble();
+        int age = 0;
+        double weight = 0.0;
+
+        try {
+            System.out.println("Enter age: ");
+            age = input.nextInt();
+            System.out.println("Enter weight in kgs: ");
+            weight = input.nextDouble();
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid format");
+            input.nextLine();
+            return null;
+        }
 
         System.out.println("Is this correct?");
         System.out.println("User: " + name + ", Age: " + age + ", Weight(kgs): " + weight + " (Y/N)");
@@ -39,18 +60,34 @@ public class UserView {
     public User getUpdatedUser() {
         System.out.println("Enter name of user to update: ");
         String name = input.next();
-        System.out.println("Enter age: ");
-        int age = input.nextInt();
-        System.out.println("Enter weight in kgs: ");
-        double weight = input.nextDouble();
+        int age = 0;
+        double weight = 0.0;
+
+        try {
+            System.out.println("Enter age: ");
+            age = input.nextInt();
+            System.out.println("Enter weight in kgs: ");
+            weight = input.nextDouble();
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Invalid format");
+            input.nextLine();
+            return null;
+        }
 
         System.out.println("Is this correct?");
-        System.out.println("User: " + name + ", Age: " + ", Weight(kgs): " + weight + " (Y/N)");
+        System.out.println("User: " + name + ", Age: " + age + ", Weight(kgs): " + weight + " (Y/N)");
         String choice = input.next().toLowerCase();
 
         if (choice.equals("y")) {
             return new User(name, age, weight);
         }
         return null;
+    }
+
+    public String getUserToDelete() {
+        System.out.println("Enter name of user to delete: ");
+
+        return input.next();
     }
 }
